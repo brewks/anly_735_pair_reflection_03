@@ -1,0 +1,55 @@
+---
+title: "PAIR Scholarly Reflection"
+subtitle: "ANLY 735 – Research Seminar in Predictive AI"
+author: "Ndubuisi Chibuogwu"
+date: today
+format:
+  docx:
+    toc: false
+bibliography: references.bib
+---
+
+# Paper
+
+**Article:** Unveil Sources of Uncertainty: Feature Contribution to Conformal
+Prediction Intervals
+
+**Authors:** Marouane Il Idrissi, Agathe Fernandes Machado, Ewen Gallic, and Arthur Charpentier
+
+**Publication:** arXiv preprint, arXiv:2505.13118
+
+**DOI/URL:** https://arxiv.org/abs/2505.13118
+
+
+# P — Position
+
+## What is the paper trying to establish?
+
+The most critical problem Il Idrissi et al. [-@ilidrissi2025uncertainty] address is the inadequacy of existing XAI methods, which tend to explain the features contributing to a model prediction but do not adequately explain the uncertainty accompanying that prediction and how it affects model reliability.  This problem matters because understanding uncertainty is central to determining the reliability of a model prediction, especially in high-stakes environments such as aviation. The authors central contribution is the use of conformal prediction together with cooperative game theory, particularly Shapley and Harsanyi-based allocations, to decompose the uncertainty surrounding a prediction into identifiable feature contributions. This makes it possible to understand not only which features contribute to the prediction itself, but also which features contribute to the uncertainty around that prediction.  The relationship to Predictive AI is therefore the use of statistical uncertainty quantification and feature-attribution methods to better explain model uncertainty and provide more information for assessing the reliability of predictions.
+
+# A — Analyze
+
+## How convincing is the evidence?
+
+I was largely convinced by the authors’ approach because they combined conformal prediction with cooperative game theory to measure and explain the uncertainty surrounding model predictions. The framework was evaluated using synthetic and multiple real-world datasets and across different conformal prediction methods, including SMR, LACP, and CQR, rather than relying on a single dataset or method.  I also found the Monte Carlo approximation useful because calculating every possible feature combination becomes computationally expensive as the number of features increases. Instead, the authors approximate the feature contributions using sampled combinations and provide statistical evidence that the approximation is reliable. An important result for me was that features that contribute strongly or weakly to a prediction do not necessarily contribute to uncertainty in the same way. The experiments show that uncertainty-based feature rankings can differ from conventional prediction-based SHAP rankings, providing additional information that could inform feature investigation and evaluation design.  However, I would not interpret these attributions as categorical evidence that a highly ranked feature is the actual real-world source of uncertainty. The attribution remains dependent on the predictive model, conformal method, and allocation approach being evaluated.
+
+# I — Interrogate
+
+## What should a critical data scientist question?
+
+My main concern with the authors’ approach is the exchangeability assumption adopted in the conformal prediction framework. Exchangeability assumes that the joint probability distribution of the observations does not change when the observations are reordered or shuffled. While this assumption may work for randomly ordered observations, it becomes more difficult with temporal data where the order of observations matters and their statistical properties may change over time. This is important to me because predictive maintenance and RUL estimation involve degradation that develops sequentially over time. Another concern is that conformal prediction provides marginal coverage across the overall data, which may not translate to the same coverage under every operating condition or degradation stage. For example, a model may achieve 90% coverage overall but only 65% coverage for observations close to failure. In that case, the model would be overconfident at a point where an inaccurate prediction could significantly affect a maintenance decision. Therefore, I would want to know whether the uncertainty attribution remains reliable under temporal changes, different operating conditions, and later stages of degradation.
+
+# R — Reimagine
+
+## How would you extend or improve the research?
+
+I would extend the authors’ experiment by applying the uncertainty attribution framework to temporal time-series data and also adding a clustering layer to the analysis. My reason for using time-series data is to determine whether the contribution of individual features to uncertainty remains consistent when the statistical properties of the data change over time. This also addresses one of the areas the authors identified for future research, which is extending the approach to conformal prediction for time-series data.  I would then use clustering on the feature-level uncertainty attributions to identify whether there are groups of observations with similar uncertainty patterns under different conditions. I would also involve a domain expert to evaluate whether the features and clusters identified by the experiment make physical and technical sense, rather than assuming that the statistical patterns represent actual real-world relationships. This study could provide additional knowledge on how uncertainty attribution performs with temporal data and whether recurring uncertainty patterns can be identified and meaningfully interpreted. This connects with my Predictive AI research interest in predictive maintenance, where degradation occurs over time and changes in uncertainty may affect the reliability of RUL predictions.
+
+# Researcher Takeaway
+
+This paper showed me that it is possible to identify and quantify the contribution of individual features not only to a prediction, but also to the uncertainty surrounding that prediction. It also broadened my understanding of the different methods, such as conformal prediction and cooperative game theory, that can be combined to evaluate and explain uncertainty in Predictive AI.
+
+# References
+
+::: {#refs}
+:::
